@@ -1,0 +1,16 @@
+USEFUL PROGRAMS
+-----------------------
+eipclient - a program capable of making TCP and UDP connections over
+            enhanced IP.  It's a little like netcat but the syntax isn't presently
+	    the same.
+
+
+NOT SO USEFUL PROGRAMS
+-----------------------
+icmpd	  - ping,traceroute, and measurement programs that have an enhanced ip flare
+
+future-dev - a dumping ground for programs that are useful but not yet 
+ 	     really useful.  Unless you're a developer, you can probably
+	     ignore this.
+
+

@@ -1,0 +1,54 @@
+\section {A Survey of Layer 3 Protocol Transitions}
+%\paragraph{}
+The following section gives an overview of transitions within three
+major Internet protocols: NCP to TCP, transitions during the life
+of IPv4, and the current transition involving IPv6. More details
+are covered in another IEEE Computer article: Internet Protocol Literature Survey.
+
+\begin{enumerate}
+ \item 
+\textbf{NCP to TCP:}
+%\subsection{NCP to TCP}
+NCP was a protocol that preceded TCP/IP as a transport protocol
+on the ARPANET.  The plan was to begin the transition on Jan 1,
+1982 and end the transition with all hosts running TCP/IP on Jan
+1, 1983.  Not all sites were preparing to convert to TCP/IP, so
+the TCP/IP team \textbf{turned off NCP} on the ARPANET IMP's for a
+full day in mid-1982 \cite{Imp01} and for two days later that fall.
+Most sites made the transition, however, a few that did not prepare
+were offline for as long as three months after the switchover.
+
+%\subsection{IPv4 Classless Inter Domain Routing (CIDR)}
+\item
+\textbf{IPv4 Classless Inter Domain Routing (CIDR):}
+RFC 791 introduced classful addressing.  Around 1993, RFC 1517
+documented classful addressing problems\cite{rfc1517}. The IETF
+developed Variable Length Subnet Masks (VLSM) with Classless Inter
+Domain Routing (CIDR) in RFCs 1518, 1519, and 4632.  This introduced
+routing protocols that could work on arbitrary bit boundaries.
+This was a benefit to network users and providers.
+
+%\subsection{IPv4 and Network Address Translation (NAT)}
+\item
+\textbf{IPv4 and Network Address Translation (NAT):} NAT was another
+major change in IPv4 that increased usable IP address space.
+It is Network Address Port Translation
+(NAPT) or PAT or IP masquerading that is the most widely used and
+is used in this sense throughout this paper.  NAT allows hosts to
+reuse one or more public IP addresses by rewriting packets that
+traverse the NAT to appear as though they originate from the NAT's
+external interface by keeping a table of port and IP mappings for
+returned packets.  More information on NAT and three approaches to
+implementing Carrier Grade NAT are described in greater detail in
+the previous IEEE Computer Magazine paper.
+
+%\subsection{IPv6}
+\item
+\textbf{IPv6:}
+There is no lack of publication on IPv6.  There are 292 RFC documents
+with the word IPv6 in the title.  It is difficult to determine which
+of these documents represents the leading thoughts on IPv6 and which
+documents can be safely ignored.  However, the abrupt transition
+is not possible. For example, RFC 6343 gives some guidelines for
+6to4 Deployment for a transition.
+\end{enumerate}

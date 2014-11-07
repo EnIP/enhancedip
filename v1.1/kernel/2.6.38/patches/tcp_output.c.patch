@@ -1,0 +1,16 @@
+1156d1155
+< 
+1170a1170,1175
+> 	mss_now -= 12; ///enhanced ip (enip)
+> 		       ///hack for extended ip options.
+> 		       ///extended IP packets add an extra
+> 		       ///12 bytes of data to a packet so TCP has
+> 		       ///to account for that.
+> 
+1789,1790c1794,1796
+< 		if (unlikely(tcp_transmit_skb(sk, skb, 1, gfp)))
+< 			break;
+---
+> 		if (unlikely(tcp_transmit_skb(sk, skb, 1, gfp))){
+> 		    break;
+> 		}

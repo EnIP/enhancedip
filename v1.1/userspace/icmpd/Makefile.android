@@ -1,0 +1,43 @@
+#############################################
+# set this to your NDK home
+
+NDK_HOME=/home/sam/Downloads/android-ndk-r5b
+
+#############################################
+
+#CC=arm-linux-gnueabi-gcc
+CC=arm-eabi-gcc
+
+#INCLUDES=-I ../platforms/android-4/arch-arm/usr/include
+INCLUDES=-I $(NDK_HOME)/platforms/android-4/arch-arm/usr/include
+DEFINES=-D__ARM_ARCH_5__ -D__ARM_ARCH_5T__ -D__ARM_ARCH_5E__ -D__ARM_ARCH_5TE__ -DANDROID -DSK_RELEASE -DNDEBUG -UDEBUG
+CFLAGS=-march=armv5te -mtune=xscale -msoft-float -mthumb-interwork -fpic -fno-exceptions -ffunction-sections -funwind-tables -fstack-protector -fmessage-length=0 -Bdynamic
+
+LFLAGS1=-Wl,-T,$(NDK_HOME)/toolchains/arm-eabi-4.4.0/prebuilt/linux-x86/arm-eabi/lib/ldscripts/armelf.x 
+LFLAGS2=-Wl,-dynamic-linker,/system/bin/linker 
+LFLAGS3=-Wl,--gc-sections 
+LFLAGS4=-Wl,-z,nocopyreloc 
+LFLAGS5=-Wl,--no-undefined 
+LFLAGS6=-Wl,-rpath-link=$(NDK_HOME)/toolchains/arm-eabi-4.4.0/../../platforms/android-9/arch-arm/usr/lib 
+LFLAGS7=-L$(NDK_HOME)/toolchains/arm-eabi-4.4.0/../../platforms/android-9/arch-arm/usr/lib 
+LFLAGS8=-nostdlib 
+LFLAGS9=$(NDK_HOME)/toolchains/arm-eabi-4.4.0/../../platforms/android-9/arch-arm/usr/lib/crtend_android.o 
+LFLAGS10=$(NDK_HOME)/toolchains/arm-eabi-4.4.0/../../platforms/android-9/arch-arm/usr/lib/crtbegin_dynamic.o 
+LFLAGS11=$(NDK_HOME)/toolchains/arm-eabi-4.4.0/prebuilt/linux-x86/lib/gcc/arm-eabi/4.4.0/libgcc.a 
+LFLAGS12=-lc
+
+LINKER_FLAGS  = $(LFLAGS1) $(LFLAGS2) $(LFLAGS3) $(LFLAGS4) $(LFLAGS5) $(LFLAGS6)
+LINKER_FLAGS += $(LFLAGS7) $(LFLAGS8) $(LFLAGS9) $(LFLAGS10) $(LFLAGS11) $(LFLAGS12) 
+
+all: oping
+
+oping: 
+	$(CC) -g $(INCLUDES) $(LINKER_FLAGS) -o oping ping.c
+	#$(CC) -g $(INCLUDES) $(LINKER_FLAGS) -o hello hello.c
+	#adb push bt /system/xbin/
+
+clean:
+	rm -f *.o
+	rm -f oping
+
+

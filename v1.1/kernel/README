@@ -1,0 +1,8 @@
+2.6.38 - This is the most complete implementation.  use it if you're not sure.
+         It includes both a client/server implementation of Enhanced IP as well
+         as a NAT implementation.
+3.10.49 - This implementation contains a NAT implementation of Enhanced IP targeted
+          towards the OpenWRT platform.
+3.15.3  - This implementation contains a NAT implementation of Enhanced IP for those
+          who want to run a newer kernel on their NAT system.
+

@@ -1,0 +1,105 @@
+%% bare_jrnl.tex
+% Sams
+\documentclass[letterpaper,10pt]{IEEEtranTCOM}
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{colortbl}
+\usepackage{float}
+% For reading with less pages wasted uncomment the next line
+%\usepackage[margin=0.5in, paperwidth=8.5in, paperheight=11 in]{geometry}
+%\usepackage[margin=0.5in]{geometry}
+% For doublespacing uncomment the next 2 lines
+\usepackage{setspace}   
+%\doublespacing   
+%\floatstyle{boxed} 
+\floatstyle{ruled} 
+\restylefloat{figure}
+\normalsize
+\hyphenation{op-tical net-works semi-conduc-tor}
+
+
+\begin{document}
+\title{Survey of Deployed Methods\\for Increasing Internet Address Space}
+
+\author{William~Chimiak,~\IEEEmembership{Senior Member,~IEEE,}\\
+    Samuel~Patton, \\and~Stephen~Janansky}
+
+%\author{William~Chimiak,~\IEEEmembership{Senior Member,~IEEE,}\\ Samuel~Patton,\\ and~Stephen~Janansky}
+
+
+\date{December 14, 2011}
+
+% The paper headers
+%\markboth{IEEE Computer}%
+%{Submitted paper}
+
+% make the title area
+\maketitle
+
+\begin{abstract}
+%\begin{figure*}
+%\end{figure*}
+This paper provides the background for an extension to IPv4 called 
+Enhanced IP (EnIP).  EnIP extends the address space of IPv4 in 
+response to the IPv4 address depletion problem. This paper serves as 
+a literature survey on IPv4, IPv6, and Carrier Grade NATs.  This survey was
+used to inform research on Enhanced IP, the details of which are 
+covered in a seperate paper.
+
+\end{abstract}
+
+
+% IEEEtran.cls defaults to using nonbold math in the Abstract.
+% This preserves the distinction between vectors and scalars. However,
+% if the journal you are submitting to favors bold math in the abstract,
+% then you can use LaTeX's standard command \boldmath at the very start
+% of the abstract to achieve this. Many IEEE journals frown on math
+% in the abstract anyway.
+
+% Note that keywords are not normally used for peerreview papers.
+%\begin{IEEEkeywords}
+%IPv4 address depletion, IPv6, Enhanced IP.
+%\end{IEEEkeywords}
+
+% For peer review papers, you can put extra information on the cover
+% page as needed:
+% \ifCLASSOPTIONpeerreview
+% \begin{center} \bfseries EDICS Category: 3-BBND \end{center}
+% \fi
+% For peerreview papers, this IEEEtran command inserts a page break and
+% creates the second title. It will be ignored for other modes.
+%% \IEEEpeerreviewmaketitle
+
+\section{Introduction}
+
+The rapid increase of mobile devices has created a large demand for
+IP addresses.  At present, there are approximately 7 billion people and 3 billion usable IPv4 addresses.
+It would be useful to have a unique address for each mobile device so that any device could call another.  
+Presently this is not possible.  Since 1999, IPv6 has presented a similar
+argument that a longer address would make VoIP applications simpler to deploy.  We analyzed IPv6 to learn
+how it works.
+
+In addition to IPv6 analysis, we also studied transitions during the life of IPv4.  On at least four occasions, IPv4
+evolved to remedy address space exhaustion issues.  Further, we looked into the history of ARPANET
+at a fundamental transition in its history: the switchover from NCP to TCP/IP.  Finally, we
+performed a literature survey on Carrier Grade NAT technology.  Carrier Grade NAT can offer an immediate fix
+to ISPs with limited IP address space.  Deployment of Carrier Grade NAT appears to have some additional costs in terms
+of additional expense involved in law enforcement monitoring.  CGNs may also ossify the network to make future deployment
+of IPv6 more difficult.
+
+\section{Outline}
+Section III of the paper discusses several transitions in the Internet Protocol
+suite.  These transitions include NCP to TCP/IP, the evolution of IPv4, and IPv6.
+The final section includes closing remarks.
+
+\input{transitions}  %sam
+
+%\include makes a pagebreak, input does not
+%\include{conclusion}
+\input{conclusion}
+
+\bibliographystyle{plain}
+\bibliography{ourrefs,rfc}
+
+\end{document}
