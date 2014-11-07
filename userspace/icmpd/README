@@ -1,0 +1,17 @@
+Examples of running traceroute:
+./traceroute -d 2.2.2.1 
+./traceroute -d 2.2.2.1 -o
+./traceroute -d 2.2.2.1 -o -D 10.1.1.2
+
+Examples of running traceroute:
+./eping 2.2.2.2
+./eping 2.2.2.2.10.1.1.2
+
+Examples of running etraceroute which right now is a semi-functional tcp traceroute tool:
+./etraceroute -d 2.2.2.1
+./etraceroute -d 2.2.2.1 -o -D 10.1.1.2 
+
+Examples of using measure:
+ ./measure -d 10.0.0.1 -s 10.3.3.2 -c 10
+
+

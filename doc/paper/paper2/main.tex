@@ -1,0 +1,94 @@
+%\documentclass[letterpaper,10pt]{article}
+\documentclass[letterpaper,final,peerreview,10pt,onecolumn]{IEEEtranTCOM}
+
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{colortbl}
+\usepackage{float}
+% For reading with less pages wasted uncomment the next line
+% 2012 Jan 27 commented out as per editor request
+%\usepackage[margin=0.7in, paperwidth=8.5in, paperheight=11in]{geometry}
+% For doublespacing uncomment the next 2 lines
+\usepackage{setspace}
+%\doublespacing
+%\floatstyle{boxed} 
+\floatstyle{ruled} 
+\restylefloat{figure}
+\normalsize
+\hyphenation{op-tical net-works semi-conduc-tor}
+
+\begin{document}
+
+% Title can use linebreaks \\ within to get better formatting as desired
+\title{Enhanced IP}
+\date{April 17, 2012}
+\author{William~Chimiak,~\IEEEmembership{Senior Member,~IEEE,}\\ Samuel~Patton,\\ and~Stephen~Janansky}
+%\author{William~Chimiak, Stephen~Janansky, Samuel~Patton }
+
+% The paper headers
+%\markboth{IEEE Computer}%
+%{Submitted paper}
+
+% make the title area
+\maketitle
+
+
+\begin{abstract}
+This paper introduces an extension to IPv4 called Enhanced IP, or EnIP for
+short.  EnIP offers a solution to IPv4 address depletion. EnIP
+does not replace IPv4 but builds on top of it, maximizing backward
+compatibility.  EnIP is currently deployed between two nodes at the University
+of Maryland and the University of Delaware, connected via Internet 2.
+Each network has an IPv4 gateway with hosts behind the gateway.
+Packets between the two networks are routed over IPv4 but using addresses
+of the following form: 65.127.221.1.10.1.1.1.  The first four bytes
+is the gateway address and the second four bytes, carried in an IP option, is
+the address of a host behind the gateway.  
+  
+Applications such as http, samba, and ssh have been demonstrated between 
+the two EnIP networks \textbf{without modification} of the software or routers 
+in the path.
+\end{abstract}
+
+
+\section{Introduction}
+
+%\IEEEPARstart
+Enhanced IP (EnIP), provides a model for increasing the
+life of IPv4 by integrating EnIP into the current
+IPv4 infrastructure.  One powerful feature of EnIP is that it
+does not require updates to DHCP, ARP, and existing IPv4 routing
+protocols.  EnIP packets transit the Internet as IPv4 packets
+carrying additional address bits and state in an IP option, so
+there is no need for a routing table update as is the case in IPv6.
+However, EnIP's use of an IP option requires minor additional logic to
+be added to fast path implementations on routers\cite{router01}.
+
+\section{Outline}
+In parallel to Enhanced IP research, a survey paper covering many aspects
+of IPv4, IPv6, and Carrier Grade NAT was created.  The survey paper is used
+to justify research on Enhanced IP.  The title of the survey paper is:
+Survey of Deployed Methods for Increasing Internet Address Space.  For those not familiar with the transition
+to IPv6 and the evolution of IPv4, it is recommended that the survey paper
+be read prior to this paper.
+
+Section III of this paper describes the design decision to use IP options in EnIP.
+Section IV introduces the mechanics of EnIP, followed by section V which
+discusses the integration plan for EnIP.  
+The final section includes closing remarks with emphasis on some areas
+for further research.
+
+%\include makes a pagebreak
+%\input{transitions}  
+
+
+\input{ip_options}    
+\input{eip_basics}     %bill
+\input{eip_transition} %steve
+\input{conclusion}	
+
+\bibliographystyle{plain}
+\bibliography{ourrefs,rfc}
+
+\end{document}

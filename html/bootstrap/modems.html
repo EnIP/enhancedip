@@ -1,0 +1,133 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Enhanced IP Code</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+    </style>
+    <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="assets/js/html5shiv.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
+                    <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
+                                   <link rel="shortcut icon" href="assets/ico/favicon.png">
+  </head>
+
+  <body>
+    <div class="dropdown-backdrop"></div>
+
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="#">Enhanced IP</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="documentation.html">Documentation</a></li>
+              <li><a href="downloads.html">Downloads</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Developers<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="code.html">Code</a></li>
+                  <li><a href="http://sourceforge.net/p/enhancedip/discussion/?source=navbar">Get Involved</a></li>
+                  <li><a href="video.html">Enhanced IP Video</a></li>
+                  <li class="divider"></li>
+                </ul>
+              </li>
+              <li><a href="about.html">About</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Contact<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                 <li><a href="contactus.html">Contact Details</a></li>
+                 <li><a href="feedback.html">Give Feedback</a></li>
+                 <li class="divider"></li>
+                </ul>
+              </li>
+
+
+            </ul>
+
+	    <!--
+            <form class="navbar-form pull-right">
+              <input class="span2" type="text" placeholder="Email">
+              <input class="span2" type="password" placeholder="Password">
+              <button type="submit" class="btn">Sign in</button>
+            </form>
+	   -->
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+<br><br><br><br><br>
+<img src=img/code.png width="10%" heigth="10%">
+<h2>Comcast</h2>
+The Cisco DPC3008 modem purchased from 
+<a href="http://www.amazon.com/gp/product/B007OAHDTU/ref=pd_lpo_sbs_dp_ss_2?pf_rd_p=1535523722&pf_rd_s=lpo-top-stripe-1&pf_rd_t=201&pf_rd_i=B006IJHK96&pf_rd_m=ATVPDKIKX0DER&pf_rd_r=124EFWNCKYRZ1369K5Z3">Amazon</a> worked well for me.  Make sure you buy the DPC3008 that says it has been packaged specifically for Comcast's network.<br>
+I am not entirely sure what seperates this modem from the standard DPC3008 but I heeded the Internet's warnings and my modem is now working.  Comcast has to<br>
+activate the modem on their network for it to work.  Follow the instructions in the modem box and be polite to the service technicians and you shouldn't have <br>
+any problems.  I used the online chat help to activate the modem as opposed to the phone support and had<br>
+positive results.  It took about 2.5 hours to complete the setup with Comcast so be ready to wait a while.  They take $5/month off of your bill for doing this and<br>
+send you a UPS box so you can ship them back your old modem/router.<br><br>
+
+I have paired the DPC3008 successfully with an OpenWRT router <a href="http://www.amazon.com/N750-Dual-Router-Wireless-Accelerate/dp/B007KZQM9Q">(Western Digital N750)</a>.  I have the Enhanced IP patches working on OpenWRT.....barely<br>
+I am not sure how long it will take me to get the patches cleaned up enough for release.  Drop me a line if you want to help test.<br><br>
+<br>
+
+<h2>Verizon</h2>
+The Verizon MI-424WR router has an Ethernet WAN port that doesn't ship enabled by default unless you ask the technician nicely to enable it during the initial
+install.  We have never tried this but evidently running a Cat-6e cable from the ONT to the WAN interface of the MI-424WR and then calling Verizon and asking
+them to enable it and break your existing DHCP lease works.  There may be some ports that need forwarded to get your TV channel changing to work (we speculate as we have not done this.)  Here's a <a href=http://www.marco.org/2011/01/15/how-to-use-your-own-router-with-fios>link</a> to a guy who has done this. 
+
+<h2>Other ISP's</h2>
+No details yet.  Please send details to sam@enhancedip.org and we will post them here.
+
+      <hr>
+
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/bootstrap-transition.js"></script>
+    <script src="assets/js/bootstrap-alert.js"></script>
+    <script src="assets/js/bootstrap-modal.js"></script>
+    <script src="assets/js/bootstrap-dropdown.js"></script>
+    <script src="assets/js/bootstrap-scrollspy.js"></script>
+    <script src="assets/js/bootstrap-tab.js"></script>
+    <script src="assets/js/bootstrap-tooltip.js"></script>
+    <script src="assets/js/bootstrap-popover.js"></script>
+    <script src="assets/js/bootstrap-button.js"></script>
+    <script src="assets/js/bootstrap-collapse.js"></script>
+    <script src="assets/js/bootstrap-carousel.js"></script>
+    <script src="assets/js/bootstrap-typeahead.js"></script>
+
+  </body>
+</html>
+
+

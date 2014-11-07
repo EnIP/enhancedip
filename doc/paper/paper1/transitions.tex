@@ -1,0 +1,386 @@
+\nopagebreak
+\section {A Survey of Layer 3 Protocol Transitions}
+%\paragraph{}
+The following section discusses transitions within three major
+protocols of the Internet Protocol Suite. The transitions discussed
+are NCP to TCP/IP, IPv4 Classless Numbering, Network Address
+Port Translation (NAPT usually called NAT), Carrier Grade NAT,
+and the current transition involving IPv6.
+
+\subsection{NCP to TCP/IP}
+NCP was a protocol that preceded TCP/IP as a transport protocol
+on the ARPANET.  In November 1981, Jon Postel wrote RFC 801, which
+described the NCP to TCP/IP transition plan.  The goal was to eradicate
+NCP's usage on the ARPANET and replace it with TCP/IP.  The plan was
+to begin the transition on Jan 1, 1982 and end the transition with
+all hosts running TCP/IP on Jan 1, 1983.  During the transition
+there would be hosts running TCP/IP, hosts running NCP only, and
+hosts running both NCP and TCP/IP.  Hosts running NCP and TCP/IP
+were called ``dual protocol hosts'', which is similar to language
+used in the IPv6 transition standards for hosts that are dual stack,
+running both IPv4 and IPv6.  The transition from NCP to TCP/IP is sometimes referred to as a flag
+day because there was a date when the transition was to be finished.
+At the end of the transition, the IMPs would be updated with a
+simple patch to stop passing NCP.  Not all sites were preparing to
+convert to TCP/IP, ``so Cerf, Postel, and the TCP/IP team turned off
+the NCP network channel numbers on the ARPANET IMP's for a full day
+in mid-1982''\cite{Imp01}.  They also turned off NCP for two days
+later that fall.  The full switchover to TCP/IP occurred on Jan 1,
+1983 without too many problems although a few sites were down for
+as long as three months while they upgraded their systems.
+
+\subsection{IPv4}
+Originally, the 4 byte IP address was divided into the
+\textit{network number field} (the most significant 8 bits) and the
+\textit{rest field}(the lower 24 bits).  This original addressing
+system only allowed for 254 different networks on the Internet which
+lead to the introduction of classful network addressing in 1981
+as part of the Internet Protocol (IP), RFC 791.  Classful network
+addressing created three types of networks: \textit{class A},
+\textit{class B}, and \textit{class C}.  Two other networks were
+defined later (\textit{class D and E}).  Around 1993, RFC 1517
+documented two problems caused by classful addressing.  Namely,
+class C networks allowed for a network to have up to 254 hosts
+while class B networks could have up to 65534 hosts.  For many
+organizations, 254 addresses was not enough and 65534 was too many.
+Under the classful system, organizations received a class B and
+many of the addresses remained unused.  A second problem caused by
+classful addressing was a large increase in the routing table size
+caused by advertising many geographically dispersed class C networks.
+There was no opportunity for route aggregation.  It was determined
+that a change was necessary, otherwise there would be an exhaustion
+of IP network numbers.  The next major evolution was to add variable
+length subnet masks (VLSM).  VLSM allows networks to be divided
+into smaller sizes than was possible under the classful system.  
+Classless routing also introduced routing protocols that could work on arbitrary
+bit boundaries.  These included RIP-2, EIGRP, IS-IS, and OSPF.
+
+Another major change in IPv4's usage came with the introduction of 
+NAT. While there are many uses of NAT, this
+paper specifically refers to NAPT, which is also referred to as PAT
+or IP masquerading.  RFC 2663 clarifies many terms in this 
+mechanism. NAPT is the most widely used form of NAT and
+the form of NAT discussed throughout this paper.  NAT allows one
+or more hosts to reuse one or more public IP addresses by rewriting
+packets that traverse the NAT to appear as though they originate from
+the NAT's external interface.  The NAT keeps a table of port and
+IP mappings so returned packets can be sent back to the internal
+host that originated the connection.  There are some limits to
+NAT devices.  A well understood limitation is that since end-to-end
+connectivity is broken, protocols which embed their addresses in a
+packet's payload are broken without additional fixup modules in the
+NAT device.  Protocols such as FTP and SIP are known to have problems
+traversing NATs without additional effort.   A second
+problem with NATs involves the limits of the multiplexing mechanism.
+There are 65535 TCP ports, thus, a quick analysis might suggest that
+as many as 65535 concurrent TCP connections per public NAT IP address
+is possible.  However, Miyakawa mentions an upper limit of 32000
+concurrent TCP connections per IP\cite{Apnic03}.  We found a Linux
+IP masquerading reference which mentions a default limit of 4096
+connections and an upper limit of 32000 connections if the variables
+\textbf{PORT\_MASQ\_BEGIN} and \textbf{PORT\_MASQ\_END} are adjusted
+in \textit{/usr/src/linux/net/ipv4/ip\_masq.h}.  However,
+this reference was only relevant to 2.4 linux kernels and at the time
+of this writing 2.6 and 3.0 kernels represent modern Linux kernels.
+A quick look at a more recent kernel (2.6.38) indicates that the
+previously mentioned file is no longer present.  It is not clear why
+Miyakawa and the 2.4 linux kernel suggest an upper limit of 32000
+connections.  Further investigation into modern NAT multiplexing
+mechanisms might be warranted.  One of the more interesting aspects
+of Miyakawa's work was his profiling of popular applications
+for the number of concurrent TCP connections required\cite{Apnic03}.
+For example, he noted that iTunes required 270 connections to be
+open at one point in time.  Miyakawa's results are very interesting
+at a time when some Internet providers are implementing a second
+layer of NAT to increase the lifespan of their IPv4 address pools.
+This second layer of NAT is referred to as Carrier Grade NAT or
+Large Scale NAT.  While Miyakawa's results are very interesting,
+it would be beneficial to recreate his experiments for verification.
+
+
+Three approaches to implementing Carrier Grade NAT were
+encountered during research: Nat444, Dual-Stack Lite, and
+NAT64.  In all of these approaches,
+the Carrier Grade NAT is configured with a number of public IP
+addresses for use in NAT.  In the NAT 444 scenario, customer
+equipment is allocated an RFC 1918 address on the WAN interface
+instead of a public IPv4 address.  The traffic is NATed once at the
+customer's location and a second time at the Carrier Grade NAT, where
+a public IP address is assigned.  With Dual-Stack Lite the customer
+is provided modified customer premises equipment.  The customer's
+LAN is IPv4.  When packets reach the CPE default gateway, instead of
+being NATed, the packets are encapsulated in IPv6 packets and carried
+to the provider's Carrier Grade NAT device.   At the Carrier NAT the
+original IPv4 packets are removed from the IPv6 packet and NATed
+with a public IP address.  A state table is maintained in order
+to send return packets back to the appropriate CPE IPv6 address.
+NAT64 requires the customer network to be completely IPv6 and all
+connections to be originated by a DNS request.  When the customer
+wishes to connect to an IPv4 address, such as a web site, the
+customer machine issues a AAAA DNS request, which is received by
+a DNS64 server.  The DNS64 server takes the request and since it
+is also connected to the IPv4 network performs an A record lookup.
+Once the A record lookup is returned, the DNS64 server returns a AAAA
+response embedding the A record's answer in the least signficant
+32-bits of the 128-bit AAAA record response.  The most significant
+96-bits assures the packet will route to the NAT64 gateway.  When the
+client sends the IPv6 packet it is received by the NAT64 gateway,
+a router connected to both the IPv4 and IPv6 networks.  The NAT64
+gateway translates the packet into an IPv4 packet and maintains a
+state table for any packets that return.  In this way, an IPv6-only
+host can reach IPv4 servers.  There are other translation protocols
+in use not covered here but mentioned in an attempt to be complete.
+They are: IVI, gogo6, Nat66, 4rd, and Nat46.
+
+Miyakawa's work is useful for taking a population of users and
+estimating the number of public IP addresses required on a Carrier
+Grade NAT to accomodate $N$ customers.  Miyakawa also provides
+some insight into the economics of Carrier Grade NAT.  He notes
+it will be necessary to charge users less and CGN service will be
+more expensive to operate because of logging.  There are
+logging complexities with DS-Lite, 
+but Doyle also notes logging packets in
+Nat444 scenarios may not be more expensive.  Liu et. al. confirm
+the technical and economic difficulties of logging Dual-Stack
+Lite and NAT64 networks\cite{Nat03}.  Another interesting aspect
+of Carrier Grade NAT is that in some scenarios it may make the
+transition to IPv6 more difficult.  From current research, it is
+not clear how Dual-Stack Lite and NAT64 affect a future transition
+to IPv6, Nat 444 breaks a number of the IPv6 transition protocols.
+NAT 444 appears to be the simplest of the CGN options to employ.
+It is not clear how widely deployed any of the CGN technologies
+have become and whether the complexity and cost of logging will
+force the market to seek alternative solutions.
+
+\subsection{IPv6}
+A group known as IPng (IP Next Generation) was chartered to
+create a competition focused on finding a suitable replacement
+for IPv4 in RFC 1550.  RFC 1454 discusses three main protocols in the
+competition: SIP, PIP, and TUBA.  The group selected
+a modified version of SIP called Simple Internet Protocol Plus
+(SIPP) explained in RFC 1710.  SIPP extended the address size from 32 to
+64 bits.  RFCs 1883 and 2460 reflects the decision
+to increase SIPP's address size from
+64 to 128 bits.  In addition to a vastly
+increased address size in IPv6, RFC 2460 describes how
+the IPv6 header has been optimized
+for routing.  This was done by removing the checksum
+from the IPv6 header.  In IPv4, every time a packet traverses a
+router, the IP ttl is decremented and the checksum invalidated.
+The checksum must be recomputed before the packet can be forwarded.
+With IPv6, recomputing the checksum is not necessary.  However,
+IPv4 proponents could argue from RFC 1141 that
+there are optimized implementations of
+the IP time-to-live (ttl) decrement and checksum update algorithm.
+Further analysis is required but perhaps this optimization is lost
+from the increased computational complexity of performing the most
+specific match to find an entry in the IPv6 routing table?
+
+IPv6 provides a much larger address space, which at the
+present time seems necessary given the depletion of IANA's
+usable IPv4 address pool.  However, the transition to IPv6 is
+non-trivial.  Few disagree with the goal of providing a larger
+address pool but many have been critical of the IPv6 transition
+process\cite{Cpe01,ipv6mess}.  There are
+presently 292 RFC documents with the word IPv6 in the title.  It is
+difficult to determine which of these documents represents the
+leading thoughts on IPv6 and which documents can be safely ignored.
+The task of becoming familiar with the protocols that make up IPv6
+is large.   What follows is a discussion of the IPv6 transition using
+five catergories: transitioning the core, transitioning the edge,
+deployment to end hosts, transitioning applications, and security.
+
+The core of the Internet operates through a number of voluntary
+agreements where Internet service providers agree to allow packets
+to flow between their networks.  A large tier
+1 provider such as Level 3 has over 3000 BGP peering sessions,
+which represent some number of business agreements less than or
+equal to 3000.  Each business agreement involves the
+setup of a BGP connection between providers for exchange of routes.
+Typically, this is done with phone and/or email contact to setup
+the BGP session.  For the IPv6 transition, providers like Level3
+must obtain an IPv6 allocation, perform address planning to assign
+IPv6 addresses to all relevant interfaces of their routers, and
+contact their peers to setup a BGP session for the exchange of IPv6
+routes.  Their peers also must obtain an IPv6 address allocation,
+perform address planning, and assign addresses to the relevant
+network interfaces before the exchange of IPv6 routes can occur
+\cite{Peering02}.  An attempt was
+made to determine the number of IPv6 autonomous systems advertising
+routes into the IPv6 routing table.  In order to do this, three
+bgp monitoring sources were queried.
+Each of the three sources provide different numbers for the number of
+IPv4 and IPv6 autonomous systems.  The numbers found are as follows:
+
+\begin{table}[htp]
+\begin{center}
+\begin{tabular}{| l | c | c | c |}
+\hline
+ & \textbf{Date} & \textbf{IPv4} & \textbf{IPv6}  \\
+\hline
+ \textbf{potaroo} & October 2011 & 25296 & 741  \\
+\hline
+ \textbf{bgpmon} & August 2011  & 32768 & 2628 \\
+\hline
+\textbf{he.net} & August 2011 & 38604 & 4471 \\
+\hline
+\end{tabular}
+\caption{Disagreement on the number of AS's in the routing tables}
+\label{tab:template}
+\end{center}
+\end{table}
+
+The bgpmon numbers indicate 7\% of the IPv4 autonomous systems have
+enabled IPv6 and are advertising their routes into the IPv6 routing
+table.  However, the potaroo numbers indicate that .029\% of the IPv4
+autonomous systems are advertising IPv6 routing information while
+the Hurricane Electric numbers indicate 11.6\%.  No conclusions were
+drawn based on these numbers.  A discussion on IPv6 opportunities by
+Vinton Cerf to the Google IPv6 Implementer's conference references 
+IPv6 peering as one of the areas where more
+work needs to occur.  He suggests providers should
+enable IPv6 on the interfaces where there is already IPv4 peering
+and that no additional peering agreements are necessary.  Cerf has
+also discussed problems with home routers supporting IPv6, indicating
+there is lack of a business incentive.  Standards that describe IPv6
+in CPE devices began to appear in 2010\cite{Cpe02,Broadband01}.
+For example, the Broadband Forum published TR-124 in May, 2010.
+This document describes functional requirements for Broadband
+residential gateways.  As part of this document, 22 IETF RFCs are
+listed as required for meeting IPv6 requirements\cite{Broadband01}.
+The IETF also describes basic requirements for customer edge routers
+in RFC 6204, which was published in August, 2011.
+While a few CPE devices have supported IPv6 for a while \cite{Cpe01},
+there have also been a number of problems with lack of support
+or broken IPv6 support in CPE implementations\cite{Cpe01,Cpe02}.
+For example, some vendors of CPE devices include 6to4 support,
+which is a transition technology for reaching the IPv6 Internet by
+tunneling over IPv4 to an anycasted server.  Some vendors shipped
+their equipment with 6to4 enabled by default which led to a number
+of problems outlined in RFC 6343.  There are thirty three 6to4
+gateways on the bgpmon web site.  Little information
+is available in terms of the maximum load these nodes are capable
+of handling.  It is not clear whether RFC 6204 or the Broadband
+Forum standards represent the correct IPv6 IETF implementation.
+It is not clear, why new standards are
+required for CPE devices since they are routers.
+
+With respect to deploying IPv6 to end hosts, many modern
+operating systems support device configuration via neighbor
+discovery as detailed in RFC 2461 and DHCPv6 described in RFC
+3315.  However, one problem is that not all operating systems 
+support both neighbor discovery and DHCPv6.  
+As a result, it might be
+necessary to choose an address assignment strategy where some
+legacy operating systems can not receive IPv6 addresses from the
+automatic mechanisms.
+
+IPv6 requires some legacy software to be updated.  For example,
+if a program uses \textit{gethostbyname} for dns lookups, it
+will be necessary to migrate the application to use the newer
+\textit{getaddrinfo} function.  \textit{getaddrinfo} returns a
+\textit{struct sockaddr\_in6} if the dns resolver gets an answer
+to a AAAA lookup.  It is the job of the application to pass the
+\textit{struct sockaddr\_in6} to functions like connect.  This change
+is simple to make.  However, there are many applications with network
+functionality that need to be upgraded to handle the IPv6 case.
+It seems similar to the Y2K problem.  In Y2K there were many lines
+of code to be changed.  Many of these changes were not difficult
+to make.  However, when considering the universe of programs to
+update, the problem seems larger.  Fortunately, the model outlined in
+the IPv6 transition RFCs does not suggest the IPv4 network will go
+away as explained in RFC 4213.  Instead, emphasis is placed on the importance
+of the IPv4 network during the change.  This strategy is called
+\textit{dual stack}, since hosts and routers will run IPv4 and IPv6
+stacks at the same time.  The IPv6 transition strategy also allows
+for the use of transition protocols.  The IPv6 core network will
+not be fully functional in the early days.  This implies that
+native IPv6 connections, or direct connections into the IPv6
+Internet, will not be available to everyone.  The alternative
+to a native IPv6 connection is to use a transition protocol.
+Transition protocols tunnel over IPv4 to reach the IPv6 network.
+Some of these protocols are:
+
+ \begin{table}[htp]
+\begin{center}
+ \begin{tabular}{|l|p{4in}|}
+   \hline
+   \textbf{RFC \#} & \textbf{Title} \\
+   \hline
+   4213 & Basic Transition Mechanisms for IPv6 Hosts and Routers (6in4)\\
+   \hline
+   3056 & Connection of IPv6 Domains via IPv4 Clouds (6to4)\\
+   \hline
+   4214 & Intra-Site Automatic Tunnel Addressing Protocol (ISATAP)\\
+   \hline   
+   4380 & Teredo: Tunneling IPv6 over UDP through Network Address Translations (Teredo) \\
+   \hline
+   5569 & IPv6 Rapid Deployment on IPv4 Infrastructures (6rd)\\
+   \hline
+  \end{tabular}
+ \caption{IPv6 Transition Protocols}
+\end{center}
+ \end{table}
+
+There are problems with using 6to4, 6rd, 6in4, and ISATAP from behind
+NATs.  Teredo was desgined to handle this scenario.  Unfortunately,
+Hoagland's study of Teredo notes it can cause unintended security
+problems since it tunnels through NATs and firewalls and places
+a computer directly onto the IPv6 Internet.  This is of concern
+since Teredo is on by default on Windows Vista.
+The availability of Teredo tunneling may
+create a disincentive for ISPs to deploy Native IPv6 and for home
+users to upgrade their NAT and other perimeter devices to support
+the possibility of native IPv6 connectivity.
+
+With respect to IPv6 costs, RTI prepared a report at the behest of
+the U.S. National Institute for Standards and Technology suggesting
+the move to IPv6 will cost U.S. entities \$25 billion over 28
+years during the period 1997 to 2025\cite{RTI01}.  In addition
+to estimating costs, the study also looks at potential benefits
+of switching to IPv6.  One example is an estimated cost savings
+from reducing NATs and the move to end to end IP reachability,
+thus enabling VOIP to gain more popularity.  They estimate that
+widespread VOIP usage could result in a savings of \$7.8 billion
+annually.  This study has caused controversy among IPv6 proponents
+who believe the roll out cost estimates are too high.
+There is also belief that not enough emphasis was placed on the
+costs of not switching to IPv6.  Very little information is publicly
+available on the costs of upgrading software and hardware to be
+compatible with IPv6.  While the costs of licensing for operating
+systems based on Windows is widely available, the costs associated
+with upgrading network hardware such as switches, firewalls, and
+routers is not widely available in open literature.
+
+Running a dual-stack network can increase exposure for security
+vulnerability.  Neville-Neil of the Freebsd team documented a problem
+in 2007 where IPv6 was partially enabled by default on Freebsd.
+By default systems came up with link local addresses.  Since many
+users were not aware of this behavior, their firewall rules lacked
+configuration to protect the IPv6 link local address\cite{Freebsd01}.
+Neville-Neil outlined how an attacker might take advantage of this.
+The solution the Freebsd developers chose was to disable IPv6
+in the default configuration.  Neville-Neil also mentions the
+RH0 security problem.  IPv6 includes extension headers for adding
+functionality to the IPv6 header much like IPv4's IP options.  One
+type of routing header is the Type 0 header.  With this mechanism,
+it is possible to specify the path a packet takes by specifying
+IPv6 addresses as part of the routing header.  This mechanism is
+similar to IPv4's loose source routing, which was itself the source
+of security issues\cite{RH01}.  The IETF later deprecated support
+for RH0 in RFC 5095.  There have been security issues described for
+the 6to4 transition protocol.  These issues include risks for denial
+of service and increased risk of spoofing IPv6 packets described
+in RFC 3964.
+
+With respect to the LAN, problems relating to the Neighbor discovery
+protocols are well documented in RFCs 4861 and 4862.  For example,
+RFC 6104 shows one potential problem involves rogue router 
+advertisements, whether it be from misconfiguration or from a malicious person.
+The attacks on neighbor discovery are similar to the attacks on ARP.
+Detailed threat models for neighbor discovery are included in RFC 3756.
+
+IPSec is included as part of IPv6 explained in RFC 2401.  There is work
+on Secure Neighbor Discovery (SEND) in RFC 3971 
+to address security problems outlined in RFC 3756: \textit{IPv6
+Neighbor Discovery(ND) Trust Models and Threats}.
