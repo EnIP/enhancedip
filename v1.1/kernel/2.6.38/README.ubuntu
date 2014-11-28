@@ -16,7 +16,7 @@
 -Type the following commands:
 	make oldconfig
 	make localmodconfig
-	make menuconfig  (Important: see appendix A now if you're building an EnIP NAT system)
+	make menuconfig     #(Important: see appendix A now if you're building an EnIP NAT system)
 	make -j5
 	make modules_install
 	make install
@@ -24,7 +24,7 @@
 -Run update-grub to install the new kernel in grub.
 	update-grub
 
--Change the boot order so the new kernel boots first.  Edit GRUB_DEFAULT=0 in /etc/default/grub/ .
+-Change the boot order so the new kernel boots first.  Edit GRUB_DEFAULT=0 in /etc/default/grub .
  The value for GRUB_DEFAULT is zero-based.  If you've just installed a new kernel, the
  newly compiled 2.6.38 kernel will be 2.
 
