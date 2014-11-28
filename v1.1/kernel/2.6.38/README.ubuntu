@@ -29,6 +29,9 @@
  The value for GRUB_DEFAULT is zero-based.  If you've just installed a new kernel, the
  newly compiled 2.6.38 kernel will be 2.
 
+-Run update-grub to install the new edits to /etc/default/grub.
+	update-grub
+
 
 #####################################################################################
 Appendix A) Read this if you're building an EnIP-enabled NAT.
