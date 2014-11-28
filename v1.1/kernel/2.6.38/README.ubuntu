@@ -14,6 +14,7 @@
 	make patch
 
 -Type the following commands:
+	cd /usr/src/linux-2.6.38/
 	make oldconfig
 	make localmodconfig
 	make menuconfig     #(Important: see appendix A now if you're building an EnIP NAT system)
