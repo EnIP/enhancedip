@@ -16,7 +16,7 @@
 -Type the following commands:
 	make oldconfig
 	make localmodconfig
-	make menuconfig  (Important: see appendix A for details on enabling NAT)
+	make menuconfig  (Important: see appendix A now if you're building an EnIP NAT system)
 	make -j5
 	make modules_install
 	make install
@@ -28,11 +28,11 @@
  The value for GRUB_DEFAULT is zero-based.  If you've just installed a new kernel, the
  newly compiled 2.6.38 kernel will be 2.
 
--Read eipnat/README if the system is an EnIP NAT.
 
 #####################################################################################
-Appendix A)
-  This is important!  Make sure NAT is enabled in 'make menuconfig'.
+Appendix A) Read this if you're building an EnIP-enabled NAT.
+
+  	1) This is important!  Make sure NAT is enabled in 'make menuconfig'.
 
         Networking Support--->
           Networking Options--->
@@ -40,11 +40,14 @@ Appendix A)
               IP: Netfilter Configuration--->
                 IP tables support (Set to m for module)
  
-        Make sure packet filtering, full nat, masquerade target support,
+        2) Make sure packet filtering, full nat, masquerade target support,
         redirect target support, and packet mangling are all selected as
         'm'.
 
-	Make sure CONFIG_NF_CONNTRACK is set as a module.
+	3) Make sure CONFIG_NF_CONNTRACK is set as a module.
+
+	4) Read eipnat/README if the system is an EnIP NAT.
+
 
 Appendix B)
   These instructions derived from here:
