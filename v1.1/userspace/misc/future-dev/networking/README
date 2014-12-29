@@ -1,0 +1,7 @@
+client - original tcp client
+server  - tcp server
+userver - udp server
+winping - future use 
+oclient - tcp connect scanner, 1st connect is without IP options, 2nd connect
+          is with IP options.
+

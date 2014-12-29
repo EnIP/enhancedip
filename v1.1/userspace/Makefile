@@ -1,15 +1,15 @@
-.PHONY : icmpd eipclient clean
+.PHONY : icmp netcat clean
 
-all: icmpd eipclient 
+all: icmp netcat 
 
-icmpd:
-	make -C icmpd
+icmp:
+	make -C icmp
 
-eipclient:
-	make -C eipclient
+netcat:
+	make -C netcat
 
 clean: 
-	make -C icmpd clean
-	make -C eipclient clean
+	make -C icmp clean
+	make -C netcat clean
 
 
