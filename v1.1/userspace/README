@@ -7,7 +7,7 @@ eipclient - a program capable of making TCP and UDP connections over
 
 NOT SO USEFUL PROGRAMS
 -----------------------
-icmpd	  - ping,traceroute, and measurement programs that have an enhanced ip flare
+icmp 	  - ping,traceroute, and measurement programs that have an enhanced ip flare
 
 future-dev - a dumping ground for programs that are useful but not yet 
  	     really useful.  Unless you're a developer, you can probably
