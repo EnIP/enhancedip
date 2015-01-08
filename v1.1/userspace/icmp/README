@@ -1,11 +1,11 @@
-Examples of running traceroute:
-./traceroute -d 2.2.2.1 
-./traceroute -d 2.2.2.1 -o
-./traceroute -d 2.2.2.1 -o -D 10.1.1.2
+Examples of running ping:
+./ping 2.2.2.2
+./ping 2.2.2.2.10.1.1.2
 
 Examples of running traceroute:
-./eping 2.2.2.2
-./eping 2.2.2.2.10.1.1.2
+./traceroute -d 2.2.2.1
+./traceroute -d 2.2.2.1 -o
+./traceroute -d 2.2.2.1 -o -D 10.1.1.2
 
 Examples of running etraceroute which right now is a semi-functional tcp traceroute tool:
 ./etraceroute -d 2.2.2.1

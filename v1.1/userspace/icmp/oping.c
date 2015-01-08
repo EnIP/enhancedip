@@ -295,7 +295,7 @@ int oping(struct in_addr dst, struct in_addr src, struct in_addr esrc, struct in
 		perror("sendto");
 		exit(EXIT_FAILURE);
 	} 
-	printf("Sent %d bytes to %s\n", retval, inet_ntoa(dst));
+	//printf("Sent %d bytes to %s\n", retval, inet_ntoa(dst));
 
 	size_t bytesread = 0;
 
