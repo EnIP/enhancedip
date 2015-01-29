@@ -101,7 +101,7 @@ int main(int argc, char* argv[])
 {
     int x = 0;
     int retval = 0;
-    int counter = 0;
+    int counter = 1;
     struct in_addr src_addr;
     struct in_addr dst_addr;
     struct in_addr extended_src;
@@ -139,9 +139,9 @@ int main(int argc, char* argv[])
 
 //    parse_argvs(argc, argv, &dst_addr, &src_addr, &extended_src, &extended_dst, &both, &counter, &sleep_amount);
 
-    fprintf(stderr, "Source address: %s\n", inet_ntoa(src_addr));
-    fprintf(stderr, "Destination address: %s.", inet_ntoa(dst_addr));
-    fprintf(stderr, "%s\n", inet_ntoa(extended_dst));
+    //fprintf(stderr, "Source address: %s\n", inet_ntoa(src_addr));
+    //fprintf(stderr, "Destination address: %s.", inet_ntoa(dst_addr));
+    //fprintf(stderr, "%s\n", inet_ntoa(extended_dst));
 
     if(counter > 0){
 	use_counter = 1;
@@ -149,12 +149,12 @@ int main(int argc, char* argv[])
 
     while(1)
     {
-	//printf("INFO: extended_src.s_addr = 0x%x\n", extended_src.s_addr);
         if(extended_src.s_addr != 0xffffffff || extended_dst.s_addr){
 	   //oping = ping with IP+Options+ICMP
            retval = oping(dst_addr, src_addr, extended_src, extended_dst, &difference);	
            if(retval < 0){
-	      fprintf(stderr, "oping failure\n");
+	      fprintf(stdout, "Failed to receive options ping from %s", inet_ntoa(dst_addr));
+	      fprintf(stdout, ".%s\n", inet_ntoa(extended_dst)); 
 	      exit(EXIT_FAILURE);
            }
 	   printf("Received options ping from %s.", inet_ntoa(dst_addr)); 
@@ -164,7 +164,7 @@ int main(int argc, char* argv[])
 	   //rping = regular IP+ICMP ping
            retval = rping(dst_addr, src_addr, &difference);	
            if(retval < 0){
-	      fprintf(stderr, "oping failure\n");
+	      fprintf(stdout, "Failed to receive regular ping from %s, time=%lld ms\n", inet_ntoa(dst_addr), difference);
 	      exit(EXIT_FAILURE);
            }
 	   printf("Received regular ping from %s, time=%lld ms\n", inet_ntoa(dst_addr), difference);
@@ -174,9 +174,9 @@ int main(int argc, char* argv[])
 	usleep(sleep_amount);
 	ctr++;
 
-	//if(use_counter && ctr >= counter){
-	//	break;
-	//}
+	if(use_counter && ctr >= counter){
+		break;
+	}
     }
 
     return 0;

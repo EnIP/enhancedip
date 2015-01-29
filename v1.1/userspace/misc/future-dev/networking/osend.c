@@ -17,6 +17,28 @@
 #define WITHOUT_OPTIONS 0
 #define WITH_OPTIONS 1
 
+#define IPOPT_COPY              0x80
+#define IPOPT_CLASS_MASK        0x60
+#define IPOPT_NUMBER_MASK       0x1f
+
+#define IPOPT_CONTROL           0x00
+#define IPOPT_RESERVED1         0x20
+#define IPOPT_MEASUREMENT       0x40
+#define IPOPT_RESERVED2         0x60
+
+#define IPOPT_END       (0 |IPOPT_CONTROL)
+#define IPOPT_NOOP      (1 |IPOPT_CONTROL)
+#define IPOPT_SEC       (2 |IPOPT_CONTROL|IPOPT_COPY)
+#define IPOPT_LSRR      (3 |IPOPT_CONTROL|IPOPT_COPY)
+#define IPOPT_TIMESTAMP (4 |IPOPT_MEASUREMENT)
+#define IPOPT_CIPSO     (6 |IPOPT_CONTROL|IPOPT_COPY)
+#define IPOPT_RR        (7 |IPOPT_CONTROL)
+#define IPOPT_SID       (8 |IPOPT_CONTROL|IPOPT_COPY)
+#define IPOPT_SSRR      (9 |IPOPT_CONTROL|IPOPT_COPY)
+#define IPOPT_RA        (20|IPOPT_CONTROL|IPOPT_COPY)
+#define IPOPT_ENIP      (0x8a|IPOPT_COPY)
+
+
 int verbose = 0;
 
 int process_netmask(char *, char *, char *);
@@ -84,7 +106,7 @@ int main(int argc, char *argv[])
 	///read data from file
 	readlen = read(fd, buf, sizeof(buf));
 	if(readlen == 0){
-		fprintf(stderr, "eof\n");
+		fprintf(stderr, "end of file\n");
 		break;
 	}
 	else if(readlen < 0){
@@ -133,7 +155,9 @@ cleanup:
    int retval = 0;
    int rv = 0;
    //char opt[12] = {0};
-   char opt[12] = "\x9a\x0c\x03\x00\x0a\x01\x01\x02\x0a\x03\x03\x02";
+   //char opt[12] = "\x9a\x0c\x03\x00\x0a\x01\x01\x02\x0a\x03\x03\x02";
+   char opt[12] = "\x03\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00";
+   opt[0] = IPOPT_NOOP;
    struct sockaddr_in serv_addr;
    char connect_str[1024] = {0};
 
@@ -156,7 +180,7 @@ cleanup:
 	   fprintf(stderr, "%s : setsockopt IP_OPTIONS failed\n", connect_str); 
 	}
         close(sockfd);
-	perror("setsockopt");
+	perror("setsockopt erroring out");
 	return -1;
       }
    } 
@@ -195,7 +219,7 @@ cleanup:
    else{
 	retval = -3;
 	if(verbose){
-	   fprintf(stderr, "%s : socket timeout\n", connect_str, portno);
+	   fprintf(stderr, "%s : socket timeout\n", connect_str);
 	}
 	close(sockfd);
 	return retval;

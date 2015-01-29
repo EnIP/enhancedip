@@ -27,6 +27,8 @@ int main(int argc, char *argv[])
     int retval = 0;
     char buffer[100000];
     char opt[12] = {0};
+    //char opt[12] = "\x9a\x0c\x03\x00\x0a\x01\x01\x02\x0a\x03\x03\x02";
+
     int with_options = 0;
 
     if (argc < 4) {
@@ -48,7 +50,7 @@ int main(int argc, char *argv[])
    }
 
    if(with_options == 1){
-      retval = setsockopt(sockfd, IPPROTO_IP, IP_OPTIONS, opt, sizeof(opt));
+      retval = setsockopt(sockfd, IPPROTO_IP, IP_OPTIONS, opt, 12);
       if(retval == -1){
 	perror("setsockopt");
 	return -1;
@@ -59,7 +61,9 @@ int main(int argc, char *argv[])
         error("ERROR connecting");
 
     bzero(buffer,100000);
-    memcpy(buffer, "GET ", 4);
+    memcpy(buffer, "GET /\r\n", 7);
+	
+    //printf("strlen=%d\n", strlen(buffer)); fflush(stdout);
 
     n = write(sockfd,buffer,strlen(buffer));
     if (n < 0) 
@@ -69,12 +73,12 @@ int main(int argc, char *argv[])
        bzero(buffer,100000);
        n = read(sockfd,buffer,1);
        if(n == 0 ){ 
-       	    fprintf(stderr, "eof.  counter=%ld\n",counter); 
+       	    fprintf(stderr, "eof.  counter=%ld\n",(long int)counter); 
 	    break; 
        }
        else if(n < 0){ 
            perror("read"); 
-	   fprintf(stderr, "counter=%ld\n", counter);
+	   fprintf(stderr, "counter=%ld\n", (long int)counter);
 	   break; 
        }
        else{ 

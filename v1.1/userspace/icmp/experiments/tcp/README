@@ -1,0 +1,5 @@
+tcp_ping crafts a SYN packet and waits for the responding SYN+ACK packet.  When the -o option
+is set on tcp_ping the SYN packet is crafted so that the packet contains IP options.  The IP
+option set is 12 bytes in length.  The option number is set to 26 with the copy bit set.  This
+simulates an Enhanced IP packet.
+

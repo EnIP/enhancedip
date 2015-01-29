@@ -33,7 +33,7 @@ struct threaddata *td = NULL;
 struct in_addr g_replyip;
 struct timeval before;
 struct timeval after;
-int DEBUG = 0;
+int DEBUG_TCP = 0;
 int retval_global = 0;
 extern char *network_card;
 
@@ -132,7 +132,7 @@ int trace_tcp(struct in_addr dst, struct in_addr src, struct in_addr *replyip, i
 	memcpy(&td->dst, &dst, sizeof(dst));
     	pthread_create(&th2, NULL, send_packet_thread, NULL);
 
-	sleep(1);
+	sleep(2);
 
 	int rett = 0;
 	rett = pthread_cancel(th1);
@@ -216,10 +216,10 @@ void got_packet(u_char *args, const struct pcap_pkthdr *header, const u_char *pa
 
 	retval_global = process_tcp_reply(packet+14, header->caplen-14, &g_replyip);
 
-	retval = reverse_lookup(g_replyip, &hostname[0]);
+	//retval = reverse_lookup(g_replyip, &hostname[0]);
 
-        printf("reply from %s, (%s)\n", inet_ntoa(g_replyip),
-                                          (retval==0)?hostname:".");
+        //printf("reply from %s, (%s)\n", inet_ntoa(g_replyip),
+         //                                 (retval==0)?hostname:".");
 }
 
 int setup_pcap(pcap_t **ph, int dstport)
@@ -233,11 +233,12 @@ int setup_pcap(pcap_t **ph, int dstport)
         bpf_u_int32 mask;
         //char filter_exp[1024] = "ip host ";  	/* filter expression */
         char filter_exp[1024] = "icmp or tcp src port ";  /* filter expression */
+	char tcpflags[512] = "tcp[tcpflags] & (tcp-syn|tcp-ack) != 0";
 	char filter_buf[2048] = {0};
 	int retval = 0;
 
-	snprintf(filter_buf, 2048, "%s%d", filter_exp, dstport);
-
+	snprintf(filter_buf, 2048, "%s%d and %s", filter_exp, dstport, tcpflags);
+ 
         //printf("INFO: filter_buf = '%s'\n", filter_buf);
         *ph = pcap_open_live(network_card, 1514, 0, 1000, errbuf);
         if(*ph == NULL){
@@ -403,7 +404,7 @@ int trace_tcp_options(struct in_addr dst, struct in_addr src, struct in_addr esr
         memcpy(&td->dst, &dst, sizeof(dst));
         pthread_create(&th2, NULL, send_packet_thread, NULL);
 
-        sleep(1);
+        sleep(2);
 
         int rett = 0;
         rett = pthread_cancel(th1);
@@ -454,18 +455,19 @@ int process_icmp_reply(char *buf, size_t len, struct in_addr *replyip)
 
         ///ICMP echo reply is our exit success code of 0
         if(icmp->type == 0 && icmp->code == 0){
+		printf("Failure: icmp->type=0, icmp->code=0\n");
                 return 0;
         }
         else if(icmp->type == 3 && icmp->code == 1){
-                printf("Received ICMP Host unreachable\n");
+                printf("Failure: received ICMP Host unreachable\n");
                 return 1;
         }
         else if(icmp->type == 11 && icmp->code == 0){
-                //printf("Received ICMP Time Exceeded\n");
+                printf("Failure: received ICMP Time Exceeded\n");
                 return 11;
         }
         else{
-                printf("Received icmp->type=%d icmp->code=%d", icmp->type, icmp->code);
+                printf("Failure: received icmp->type=%d icmp->code=%d", icmp->type, icmp->code);
                 return 12;
         }
 
@@ -485,15 +487,16 @@ int process_tcp_reply(char *buf, size_t len, struct in_addr *replyip)
 	replyip->s_addr = ip->saddr;
 
 	if(ip->protocol == IPPROTO_ICMP){
+		printf("Failure: got ICMP packet.\n");
 		return process_icmp_reply(buf, len, replyip);
 	}
 	else if(ip->protocol == IPPROTO_TCP){
-		if(DEBUG) display_tcp_buffer(buf, len);
-		//hexdump(buf, len);
+		if(DEBUG_TCP) display_tcp_buffer(buf, len);
+		printf("Success: got syn/ack reply.\n");
 		return 6;
 	}
 	else{
-		printf("other type of packet.\n");
+		printf("Failure: got other type of packet.\n");
 		return 0;
 	}
 
