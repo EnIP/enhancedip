@@ -22,7 +22,7 @@ virtual machines on our web site.  All of the software comes precompiled and set
  all the IP addresses are being switched in the appropriate places.  If
  you ca get userspace/netcat/ working, then more complex programs like ssh, apache,
  samba, etc. should work.  We'd recommend getting this program working
- before setting up DNS.
+ before setting up DNS
 
 
 
