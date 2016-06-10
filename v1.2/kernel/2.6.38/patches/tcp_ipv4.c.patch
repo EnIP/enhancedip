@@ -1,0 +1,45 @@
+75a76
+> #include <linux/eip.h>
+88a90,91
+> //see net/ipv4/udp.c definition of NAT_EIP_PLACEBO for explanation
+> #define NAT_EIP_PLACEBO 0xFFFFFFFF
+1611a1615,1649
+> /**
+>  * enhanced ip (enip)
+>  *
+>  */
+> int tcp_save_extended_ip(struct sock *sk, struct sk_buff *skb)
+> {
+> 	struct tcphdr *th;
+> 	struct iphdr *ip;
+> 	struct extended_ip *eip;
+> 
+> 	if(!sk || !skb){ return -1; }
+> 	
+> 	ip = ip_hdr(skb);
+> 	th = tcp_hdr(skb);
+> 	if(!ip || !th){
+> 		return -1;
+> 	}
+> 
+> 	if(th->syn == 1 && th->ack == 0){
+> 		//printk("SYN packet being received\n");
+> 		if(ip->ihl == 8){
+> 		   eip = (struct extended_ip *)(ip + 1);
+> 
+> 		   if(eip->optionid == 0x9a){
+> 			sk->ext_daddr = ntohl(eip->extended_saddr);
+> 		   	//printk("extended daddr = 0x%x\n", sk->ext_daddr);
+> 		   }
+> 		   
+> 		}
+> 	}
+> 
+> 	return 0;
+> }
+> 
+> 
+1659a1698,1700
+> 	
+> 
+> 	tcp_save_extended_ip(sk, skb);

@@ -1,0 +1,26 @@
+This README explains the hook needed to make the
+eipnat driver function[1].  Specifically, we apply a 
+patch to nf_nat_core.c in manip_pkt().  Look for the 
+following lines of code.  A patch similar to this would
+be required in the kernel in order for the eipnat driver
+to work.
+
+        iph = (void *)skb->data + iphdroff;
+        ipopt = (void *)skb->data + iphdroff + sizeof(struct iphdr);
+
+        ///enhanced ip (enip)
+        if(iph->ihl == 8){
+                if(ipopt->optionid==0x9a){
+                   return true;
+                }
+        }
+
+
+The code checks if the IP protocol's header length (ihl) is 8 and
+then checks for the value of 0x9a after the 20 byte IP header.  The
+value 8 rather than 5 means there are IP options, 12 bytes of them to
+be exact.  The value 0x9a is the value that represents the beginning
+of the Ehanced IP header.  When the packets return true, the eipnat
+driver picks them up for further processing. 
+
+[1] enhancedip-code/kernel/eipnat/ 

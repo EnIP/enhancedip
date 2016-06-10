@@ -1,0 +1,30 @@
+These are some iptables commands that you might find useful.
+
+
+#port 8080 to 10.3.3.2:80
+#iptables -t nat -A PREROUTING -m tcp -p tcp -i eth0 -d 2.2.2.2 --dport 8080 --sport 1024:65535 -j DNAT --to 10.3.3.2:80
+#iptables -A FORWARD -m tcp -p tcp -i eth0 -o eth1 -d 10.3.3.2 --dport 80 --sport 1024:65535 -m state --state NEW -j ACCEPT
+
+#port 2222 to 10.3.3.2:22
+#iptables -t nat -A PREROUTING -m tcp -p tcp -i eth0 -d 2.2.2.2 --dport 2222 --sport 1024:65535 -j DNAT --to 10.3.3.2:22
+#iptables -A FORWARD -m tcp -p tcp -i eth0 -o eth1 -d 10.3.3.2 --dport 22 --sport 1024:65535 -m state --state NEW -j ACCEPT
+
+#masquerade all outbound on eth0
+#iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+
+############################################################
+
+#port 8080 to 10.3.3.2:80
+#iptables -t nat -A PREROUTING -m tcp -p tcp -i eth0 -d 2.2.2.2 --dport 8080 --sport 1024:65535 -j DNAT --to 10.3.3.2:80
+#iptables -A FORWARD -m tcp -p tcp -i eth0 -o eth1 -d 10.3.3.2 --dport 80 --sport 1024:65535 -m state --state NEW -j ACCEPT
+
+#port 2222 to 10.3.3.2:22
+#iptables -t nat -A PREROUTING -m tcp -p tcp -i eth0 -d 2.2.2.2 --dport 2222 --sport 1024:65535 -j DNAT --to 10.3.3.2:22
+#iptables -A FORWARD -m tcp -p tcp -i eth0 -o eth1 -d 10.3.3.2 --dport 22 --sport 1024:65535 -m state --state NEW -j ACCEPT
+
+#masquerade all outbound on eth0
+#iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+
+
+
+

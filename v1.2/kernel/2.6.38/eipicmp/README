@@ -1,0 +1,28 @@
+The eipicmp module is a proof of concept to show ICMP
+ping works for Enhanced IP.  The code needs more work.
+Specifically, the code makes use of dev_queue_xmit()
+when it should probably make use of ip_queue_xmit().
+
+
+I couldn't figure out how to call ip_queue_xmit() in the
+available time that I had so I left the proof of conccept
+code using dev_queue_xmit().  Because I used dev_queue_xmit
+it is necessary to set the source and destination mac
+addresses.  THe source mac address would be the mac address
+of the interface the packet is originating from.  The
+destination mac address is most likely going to be your
+default gateway.  In the code, change these variables to
+get things working.
+
+static u_char *smac = "\x08\x00\x27\x43\x97\xa2";
+static u_char *dmac = "\x08\x00\x27\x76\x1d\xa2";
+
+This all assumes you have a working Enhanced IP setup.
+If you download the one off the web, then things should
+work just fine.
+
+Use the 'eping' program contained in [1] to create
+regular pings as well as Enhanced IP pings.
+
+[1] enhancedip-code/userspace/icmpd/
+
