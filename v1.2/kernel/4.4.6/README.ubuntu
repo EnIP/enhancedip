@@ -1,0 +1,61 @@
+######################################################
+#
+# README.ubuntu - PATCHING THE KERNEL FOR ENIP CLIENT
+#  
+######################################################
+
+-untar the kernel
+	tar -xvzf linux-4.4.6.tar.gz -C /usr/src/
+
+-copy a partial config file for use in compiling the new kernel
+	cp ubuntu/config /usr/src/linux-4.4.6/.config
+
+-Patch the 4.4.6 kernel with this command.
+	make patch_4.4.6
+
+-Type the following commands:
+	cd /usr/src/linux-4.4.6/
+	make oldconfig
+	make localmodconfig
+	make menuconfig     #(Important: see appendix A now if you're building an EnIP NAT system)
+	make -j5
+	make modules_install
+	make install
+
+-Run update-grub to install the new kernel in grub.
+	update-grub
+
+-Change the boot order so the new kernel boots first.  Edit GRUB_DEFAULT=0 in /etc/default/grub .
+ The value for GRUB_DEFAULT is zero-based.  If you've just installed a new kernel, the
+ newly compiled 4.4.6 kernel will be 2.
+
+-Run update-grub to install the new edits to /etc/default/grub.
+	update-grub
+
+
+#####################################################################################
+Appendix A) Read this if you're building an EnIP-enabled NAT.
+
+  	1) This is important!  Make sure NAT is enabled in 'make menuconfig'.
+
+        Networking Support--->
+          Networking Options--->
+            Network Packet Filtering framework (Netfilter) --->
+              IP: Netfilter Configuration--->
+                IP tables support (Set to m for module)
+ 
+        2) Make sure packet filtering, full nat, masquerade target support,
+        redirect target support, and packet mangling are all selected as
+        'm'.
+
+	3) Make sure CONFIG_NF_CONNTRACK is set as a module.
+
+	4) Read eipnat/README if the system is an EnIP NAT.
+
+
+Appendix B)
+  These instructions derived from here:
+	http://www.local-loopback.net/2012/12/compile-kernel-on-ubuntu-1204-lts.html
+	
+
+
