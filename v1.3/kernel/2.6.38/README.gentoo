@@ -1,0 +1,40 @@
+######################################################
+#
+# README.gentoo - PATCHING THE KERNEL FOR ENIP CLIENT
+#  
+######################################################
+-untar the kernel
+	tar -xvzf linux-2.6.38.tar.gz -C /usr/src/
+
+-Patch the 2.6.38 kernel with this command.
+	make patch
+
+-change directory to.
+	cd /usr/src/linux-2.6.38/
+
+-make a kernel .config file with 'make menuconfig' or by copying one 
+ from somewhere else.  Make sure NAT is enabled in 'make menuconfig'.
+
+	Networking Support--->
+	  Networking Options--->
+	    Network Packet Filtering framework (Netfilter) --->
+	      IP: Netfilter Configuration--->
+		IP tables support (Set to m for module)
+  
+        Make sure packet filtering, full nat, masquerade target support,
+	redirect target support, and packet mangling are all selected as 
+        'm'.
+
+
+-compile the kernel.
+   make && make modules_install && cp arch/x86_64/boot/bzImage /boot/kernel-2.6.38
+
+-update grub's /boot/grub/menu.lst to boot the new kernel.  Here's an example.
+
+	title Linux 2.6.38
+	root (hd0,0)
+	kernel /boot/kernel-2.6.38 root=/dev/sda3
+
+-Read eipnat/README if the system is an EnIP NAT.
+
+
