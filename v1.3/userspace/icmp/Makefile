@@ -27,7 +27,7 @@ old:
 install:
 	cp e_measure /usr/sbin/e_measure
 	cp e_traceroute /usr/sbin/
-	cp e_eping /usr/sbin/
+	cp e_ping /usr/sbin/
 	cp e_tcpping /usr/sbin/
 
 clean:
