@@ -13,6 +13,8 @@ ping_and_traceroute:
 	$(CC) -g -o e_tcpping tcp_ping.c hexdump.c lib.c tcp.c udp.c checksum.c -lresolv -lpcap -lpthread
 	cp e_tcpping experiments/tcp/
 	$(CC) -g -o e_traceroute traceroute.c hexdump.c icmp.c lib.c checksum.c -lresolv
+
+	$(CC) -o icmpd icmpd.c hexdump.c opong.c -lpcap
 	
 	#
 	# experimental code
@@ -22,7 +24,6 @@ ping_and_traceroute:
 
 old:
 	$(CC) -g -o findip findip.c hexdump.c oping.c
-	$(CC) -o icmpd icmpd.c hexdump.c opong.c -lpcap
 
 install:
 	cp e_measure /usr/sbin/e_measure

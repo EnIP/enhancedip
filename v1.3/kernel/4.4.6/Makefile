@@ -9,7 +9,7 @@ all: donothing
 donothing:
 	echo "execute 'make patch'"
 
-patch_4.4.6:
+patch:
 	cp 	eip.h		$(KERNEL)/include/linux/
 	cp 	sockaddr_ein.h 	$(KERNEL)/include/linux/
 	cp	socket.c	$(KERNEL)/net/

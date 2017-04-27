@@ -4,6 +4,12 @@
 #  
 ######################################################
 
+-elevate to root
+	sudo /bin/bash
+
+-get the kernel
+	wget https://www.kernel.org/pub/linux/kernel/v4.x/linux-4.4.6.tar.gz 
+
 -untar the kernel
 	tar -xvzf linux-4.4.6.tar.gz -C /usr/src/
 
