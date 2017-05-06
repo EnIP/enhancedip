@@ -22,6 +22,8 @@
 #include "ip.h"
 #include "icmp.h"
 #include "udp.h"
+#include "lib.h"
+#include "checksum.h"
 
 #include <string.h>
 #include <unistd.h>
@@ -29,6 +31,8 @@
 #include "hexdump.h"
 
 #define OPTION_LENGTH 12
+
+int process_udp_reply(char *buf, size_t len, struct in_addr *replyip);
 
 //int otraceroute_udp(struct in_addr, struct in_addr, struct in_addr, struct in_addr, struct in_addr *, int, int64 *);
 
@@ -196,10 +200,10 @@ int process_udp_reply(char *buf, size_t len, struct in_addr *replyip)
         }
 	else{
 		printf("something different\n");
-        	hexdump(buf, len);
+        	hexdump((unsigned char *)buf, len);
 	}
 
-
+	return 0;
 }
 
 

@@ -37,7 +37,10 @@ int DEBUG_TCP = 0;
 int retval_global = 0;
 extern char *network_card;
 
+int64 compute_difference(struct timeval , struct timeval );
+int setup_pcap(pcap_t **ph, int dstport);
 unsigned short tcp_checksum(unsigned short *, int );
+int process_tcp_reply(char *buf, size_t len, struct in_addr *replyip);
 unsigned short in_cksum(unsigned short *, int);
 int process_icmp_reply(char *, size_t , struct in_addr *);
 void display_tcp_buffer(char *, int );
@@ -163,6 +166,8 @@ void *pcap_loop_thread(void *ph)
 
 	pcap_loop(pcap_handle, 1, got_packet, NULL);
 
+	return NULL; //DEBUG`
+
 }
 
 void *send_packet_thread()
@@ -207,8 +212,11 @@ void *send_packet_thread()
         }
 
 	close(sockfd);
+
+	return NULL;  //DEBUG
 }
 
+//void got_packet(u_char *args, const struct pcap_pkthdr *header, const u_char *packet)
 void got_packet(u_char *args, const struct pcap_pkthdr *header, const u_char *packet)
 {
 	int retval = 0;
@@ -228,14 +236,14 @@ int setup_pcap(pcap_t **ph, int dstport)
         //char filter_exp[1024] = "ip host ";  	/* filter expression */
         struct bpf_program fp;                 	/* compiled filter program (expression) */
         bpf_u_int32 net;   			/* ip */
-        int num_packets = 1;   			/* number of packets to capture */
+        //int num_packets = 1;   			/* number of packets to capture */
         char *dev = network_card;		/* "eth0" most of the time */
         bpf_u_int32 mask;
         //char filter_exp[1024] = "ip host ";  	/* filter expression */
         char filter_exp[1024] = "icmp or tcp src port ";  /* filter expression */
 	char tcpflags[512] = "tcp[tcpflags] & (tcp-syn|tcp-ack) != 0";
 	char filter_buf[2048] = {0};
-	int retval = 0;
+	//int retval = 0;
 
 	snprintf(filter_buf, 2048, "%s%d and %s", filter_exp, dstport, tcpflags);
  
@@ -417,7 +425,7 @@ int trace_tcp_options(struct in_addr dst, struct in_addr src, struct in_addr esr
 
         *difference = compute_difference(before, after)/1000;
 
-cleanup:
+//cleanup:
 	close(sockfd);
 	if(ip){ free(ip); }
 	if(tcp){ free(tcp); }

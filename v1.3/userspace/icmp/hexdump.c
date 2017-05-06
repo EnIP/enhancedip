@@ -32,5 +32,7 @@ int		dlen;
 	for (; i % OPL; ++i)
 		printf("   ");
 	printf("\t\"%s\"\n", c);
+
+	return 0;
 }
 

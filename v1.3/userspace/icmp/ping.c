@@ -18,6 +18,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <ctype.h>
 #include <netdb.h>
 
 #include <sys/stat.h>
@@ -50,7 +51,7 @@ int get_source_addr(struct in_addr *addr);
 int enip_inet_aton(char *arg, struct in_addr *dst_addr, struct in_addr *extended_dst)
 {
 	
-	char *tok = NULL;
+	//char *tok = NULL;
 	int x = 0;
 	int retval = 0;
 	int counter = 0;
@@ -99,14 +100,14 @@ int enip_inet_aton(char *arg, struct in_addr *dst_addr, struct in_addr *extended
 
 int main(int argc, char* argv[])
 {
-    int x = 0;
+    //int x = 0;
     int retval = 0;
     int counter = 1;
     struct in_addr src_addr;
     struct in_addr dst_addr;
     struct in_addr extended_src;
     struct in_addr extended_dst;
-    int both = 0;    //if set to 1 alternates between 
+    //int both = 0;    //if set to 1 alternates between 
     		     //regular ping (rping) and IP options ping (oping) 
     unsigned int ctr = 0;  
     int use_counter = 0;
@@ -304,12 +305,12 @@ void getip(struct in_addr *src)
 int get_source_addr(struct in_addr *addr)
 {
         FILE *fd = 0;
-        struct stat sb;
+        //struct stat sb;
         char *p;
         char buf[4096];
-        int x = 0;
-        char *interface;
-        unsigned long d, g;
+ //       int x = 0;
+//        char *interface;
+        //unsigned long d; 
         int line = 0;
         struct ifaddrs *ifaddr, *ifa;
         int family, s;

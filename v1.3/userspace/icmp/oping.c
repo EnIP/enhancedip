@@ -43,6 +43,7 @@ int oping(struct in_addr, struct in_addr, struct in_addr, struct in_addr, int64 
 int rping(struct in_addr, struct in_addr, int64 *);
 int64 compute_difference(struct timeval , struct timeval );
 unsigned short in_cksum(unsigned short *, int);
+int process_ping_reply(char *, size_t );
 
 /**
  * Computes the difference and returns a value in microseconds
@@ -50,7 +51,7 @@ unsigned short in_cksum(unsigned short *, int);
 int64 compute_difference(struct timeval before, struct timeval after)
 {
 
-	int64 result = 0;
+	//int64 result = 0;
 
 	return (int64)(after.tv_sec - before.tv_sec) * 1000000 +
 			(after.tv_usec - before.tv_usec);
@@ -81,8 +82,8 @@ int rping(struct in_addr dst, struct in_addr src, int64 *difference)
 	int icmp_len = sizeof(struct icmphdr);
 	int sockfd = 0;
 	int retval = 0;
-	int esp = 0;
-	int edp = 0;
+	//int esp = 0;
+	//int edp = 0;
 	//static int x = 0;
 
 	packet_size = ip_len + icmp_len + 12;
