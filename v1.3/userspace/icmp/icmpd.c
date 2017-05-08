@@ -68,6 +68,7 @@ void packet_handler(u_char *param, const struct pcap_pkthdr *header, const u_cha
 
 int  for_single_packet(u_char *, int , const struct pcap_pkthdr *, state_t *);
 int foreach_pkt_on_interface(char *interface_name, void (*callback)(void *), char *outfile);
+int foreach_pkt_infile(char *filename, void (*callback)(void *), char *outfile);
 void file_read_callback(u_char *, const struct pcap_pkthdr *, const u_char *);
 void nic_read_callback(u_char *, const struct pcap_pkthdr *, const u_char *);
 int  find_magic_icmp(char *interface_name, char *filename, u_char *pktbuf, int len, int l2len, void (*callback)(void *), char *);

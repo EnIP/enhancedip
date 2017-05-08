@@ -267,7 +267,7 @@ int oping(struct in_addr dst, struct in_addr src, struct in_addr esrc, struct in
 	}
 
 	///set the timeout to 3 seconds
-	tv.tv_sec = 3;
+	tv.tv_sec =  3;
 	tv.tv_usec = 0;
 	retval = setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, 
 			    (struct timeval *)&tv, sizeof(struct timeval));
@@ -302,6 +302,7 @@ int oping(struct in_addr dst, struct in_addr src, struct in_addr esrc, struct in
 
 	bytesread = recv(sockfd, reply_buffer, packet_size, 0);
 	if(bytesread == -1){
+		perror("recv");
 		retval = -100;
 		goto cleanup;
 	}
