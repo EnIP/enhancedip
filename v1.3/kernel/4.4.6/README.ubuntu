@@ -17,7 +17,7 @@
 	cp ubuntu/config /usr/src/linux-4.4.6/.config
 
 -Patch the 4.4.6 kernel with this command.
-	make patch_4.4.6
+	make patch
 
 -Type the following commands:
 	cd /usr/src/linux-4.4.6/
