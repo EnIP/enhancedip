@@ -21,6 +21,8 @@
 
 #include "ip.h"
 #include "icmp.h"
+#include "lib.h"
+#include "checksum.h"
 
 #include <string.h>
 #include <unistd.h>
@@ -31,7 +33,10 @@
 
 int otraceroute_icmp(struct in_addr, struct in_addr, struct in_addr, struct in_addr, struct in_addr *, int, int64 *);
 int rtraceroute_icmp(struct in_addr, struct in_addr, struct in_addr *, int, int64 *difference);
+int process_ping_reply(char *buf, size_t len, struct in_addr *replyip);
 
+int rtraceroute_icmp(struct in_addr dst, struct in_addr src, struct in_addr *replyip, int ttl, int64 *difference);
+int otraceroute_icmp(struct in_addr dst, struct in_addr src, struct in_addr esrc, struct in_addr edst, struct in_addr *replyip, int ttl, int64 *difference);
 
 /**
 

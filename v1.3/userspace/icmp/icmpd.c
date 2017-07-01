@@ -8,6 +8,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #ifdef WIN32
 #include "pcap.h"
@@ -20,6 +21,7 @@
 #include "hexdump.h"
 #include "ip.h"
 #include "icmp.h"
+#include "opong.h"
 
 #if 0
 #include <linux/icmp.h>
@@ -29,6 +31,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <time.h>
+#include <unistd.h>
 
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -55,6 +58,7 @@ typedef struct state_type{
 	const struct pcap_pkthdr *hdr;
 }state_t;
 
+int pcap_l2len(pcap_t *fp);
 char *ip2str(unsigned int );
 void process_opong(state_t *, char *, int );
 void print_extended_ip(struct iphdr *, struct ipopt *);
@@ -63,6 +67,8 @@ void process_oping(state_t *, char *, int );
 void packet_handler(u_char *param, const struct pcap_pkthdr *header, const u_char *pkt_data);
 
 int  for_single_packet(u_char *, int , const struct pcap_pkthdr *, state_t *);
+int foreach_pkt_on_interface(char *interface_name, void (*callback)(void *), char *outfile);
+int foreach_pkt_infile(char *filename, void (*callback)(void *), char *outfile);
 void file_read_callback(u_char *, const struct pcap_pkthdr *, const u_char *);
 void nic_read_callback(u_char *, const struct pcap_pkthdr *, const u_char *);
 int  find_magic_icmp(char *interface_name, char *filename, u_char *pktbuf, int len, int l2len, void (*callback)(void *), char *);

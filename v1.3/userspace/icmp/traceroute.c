@@ -22,6 +22,8 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <netdb.h>
+#include <ctype.h>
+#include "lib.h"
 
 #if 0
 #include <linux/ip.h>
@@ -40,6 +42,7 @@
 #include "hexdump.h"
 #include "mytypes.h"
 #include "oping.h"
+//#include "icmp.h"
 
 int get_source_addr(struct in_addr *);
 int64 find_mode(int64 *, int );
