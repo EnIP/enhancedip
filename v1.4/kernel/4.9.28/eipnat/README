@@ -1,0 +1,24 @@
+#########################################################
+#
+# README.eipnat - Instructions for loading the NAT driver
+#  
+#########################################################
+-make sure the kernel was built by following the instructions
+ at README.ubuntu.  
+
+-type 'make' to build eipnat.ko
+
+-you'll need to load the scripts nat_N1.sh and nat_N2.sh, but before you run
+them you'll need to open them in a text editor and edit the MASQ_IP and NIC_NAME variables 
+to change them to your setup.  You may also need to adjust the 2 iptables masquerade 
+commands in this file.  If you want to see these files in action look at the configuration
+being used in N1 and N2 VMs that can be downloaded here: http://www.enhancedip.org/ENIP/
+
+-If you are building N1, type the following:
+   sh nat_N1.sh
+
+-If you are building N2, type the following:
+   sh nat_N2.sh
+
+
+
