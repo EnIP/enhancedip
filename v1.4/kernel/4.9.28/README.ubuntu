@@ -14,13 +14,13 @@
 	tar -xvzf linux-4.9.28.tar.gz -C /usr/src/
 
 -copy a partial config file for use in compiling the new kernel
-	cp ubuntu/config /usr/src/linux-4.4.6/.config
+	cp ubuntu/config /usr/src/linux-4.9.28/.config
 
--Patch the 4.4.6 kernel with this command.
+-Patch the 4.9.28 kernel with this command.
 	make patch
 
 -Type the following commands:
-	cd /usr/src/linux-4.4.6/
+	cd /usr/src/linux-4.9.28/
 	make oldconfig
 	make localmodconfig
 	make menuconfig     #(Important: see appendix A now if you're building an EnIP NAT system)
@@ -33,7 +33,7 @@
 
 -Change the boot order so the new kernel boots first.  Edit GRUB_DEFAULT=0 in /etc/default/grub .
  The value for GRUB_DEFAULT is zero-based.  If you've just installed a new kernel, the
- newly compiled 4.4.6 kernel will be 2.
+ newly compiled 4.9.28 kernel will be 2.
 
 -Run update-grub to install the new edits to /etc/default/grub.
 	update-grub

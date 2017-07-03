@@ -39,7 +39,6 @@ unsigned int extended_saddr;
 unsigned int extended_daddr;
 };
 
-
 static const struct nf_nat_l3proto nf_nat_l3proto_ipv4;
 
 #ifdef CONFIG_XFRM
@@ -96,22 +95,23 @@ static bool nf_nat_ipv4_manip_pkt(struct sk_buff *skb,
 				  enum nf_nat_manip_type maniptype)
 {
 	struct iphdr *iph;
-        struct ipopt *ipopt;
+        struct ipopt *ipopt; //enhanced ip
 	unsigned int hdroff;
 
 	if (!skb_make_writable(skb, iphdroff + sizeof(*iph)))
 		return false;
 
 	iph = (void *)skb->data + iphdroff;
-        ipopt = (void *)skb->data + iphdroff + sizeof(struct iphdr);
+        ipopt = (void *)skb->data + iphdroff + sizeof(struct iphdr);	//enhanced ip
 	hdroff = iphdroff + iph->ihl * 4;
 
-        ///enhanced ip (enip)
+	///enhanced ip (enip)
         if(iph->ihl == 8){
                 if(ipopt->optionid==0x9a){
                    return true;
                 }
         }
+
 
 	if (!l4proto->manip_pkt(skb, &nf_nat_l3proto_ipv4, iphdroff, hdroff,
 				target, maniptype))
@@ -150,28 +150,15 @@ static void nf_nat_ipv4_csum_recalc(struct sk_buff *skb,
 				    u8 proto, void *data, __sum16 *check,
 				    int datalen, int oldlen)
 {
-	const struct iphdr *iph = ip_hdr(skb);
-	struct rtable *rt = skb_rtable(skb);
-
 	if (skb->ip_summed != CHECKSUM_PARTIAL) {
-		if (!(rt->rt_flags & RTCF_LOCAL) &&
-		    (!skb->dev || skb->dev->features & NETIF_F_V4_CSUM)) {
-			skb->ip_summed = CHECKSUM_PARTIAL;
-			skb->csum_start = skb_headroom(skb) +
-					  skb_network_offset(skb) +
-					  ip_hdrlen(skb);
-			skb->csum_offset = (void *)check - data;
-			*check = ~csum_tcpudp_magic(iph->saddr, iph->daddr,
-						    datalen, proto, 0);
-		} else {
-			*check = 0;
-			*check = csum_tcpudp_magic(iph->saddr, iph->daddr,
-						   datalen, proto,
-						   csum_partial(data, datalen,
-								0));
-			if (proto == IPPROTO_UDP && !*check)
-				*check = CSUM_MANGLED_0;
-		}
+		const struct iphdr *iph = ip_hdr(skb);
+
+		skb->ip_summed = CHECKSUM_PARTIAL;
+		skb->csum_start = skb_headroom(skb) + skb_network_offset(skb) +
+			ip_hdrlen(skb);
+		skb->csum_offset = (void *)check - data;
+		*check = ~csum_tcpudp_magic(iph->saddr, iph->daddr, datalen,
+					    proto, 0);
 	} else
 		inet_proto_csum_replace2(check, skb,
 					 htons(oldlen), htons(datalen), true);
