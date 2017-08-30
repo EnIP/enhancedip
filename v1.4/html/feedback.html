@@ -1,7 +1,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Enhanced IP Home!</title>
+    <title>Enhanced IP Guestbook</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -30,8 +30,8 @@
   </head>
 
   <body>
-
     <div class="dropdown-backdrop"></div>
+
 
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
@@ -44,12 +44,9 @@
           <a class="brand" href="#">Enhanced IP</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li class="active"><a href="#">Home</a></li>
+              <li><a href="index.html">Home</a></li>
               <li><a href="documentation.html">Documentation</a></li>
               <li><a href="downloads.html">Downloads</a></li>
-
-
-
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Developers<b class="caret"></b></a>
                 <ul class="dropdown-menu">
@@ -58,7 +55,6 @@
                   <li class="divider"></li>
                 </ul>
               </li>
-
               <li><a href="about.html">About</a></li>
 
               <li class="dropdown">
@@ -88,40 +84,16 @@
 
     <div class="container">
 
-      <!-- Main hero unit for a primary marketing message or call to action -->
-      <div class="hero-unit">
-        <h1>Enhanced IP</h1>
-        <p>Enhanced IP (EnIP) offers a solution to IPv4 address depletion. Enhanced IP does not replace IPv4 but builds on top of it. Instead of replacing the network, as is the case with IPv6, Enhanced IP builds an overlay network on top of IPv4.  Enhanced IP also has a viable transition plan.</p>
-        <p><a href="learnmore.html" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
-      </div>
+	<h2>Enhanced IP Guest Logbook</h2>
+	<form action="feedback2.php" method="post">
+	Name: (optional) <input type="text" name="name"><br>
+	E-mail: (optional) <input type="text" name="email"><br>
+	Comments: <textarea name="comments" class="field span12" id="textarea" rows="6" placeholder="Enter a short summary."></textarea><br>
 
-      <!-- Example row of columns -->
-      <div class="row">
-        <div class="span4">
-          <h2><img src=img/downloads.jpg width="10%" height="10%"> Downloads</h2>
-          <p>Would you like to see how Enhanced IP works?  You can if you download our virtual machines.  Our virtual machines simulate a real network with PC's and NAT's all running Enhanced IP.  It's easy to setup.  Just follow the instructions at this link.</p>
-          <p><a class="btn" href="downloads.html">View details &raquo;</a></p>
-        </div>
+	<input type="submit">
+	</form>
 
-        <div class="span4">
-          <h2><img src=img/getinvolved.jpg width="13%" height="13%">Get Involved</h2>
-          <p>Whether it's testing virtual machines, conducting network measurements, writing software, or updating router configurations, Enhanced IP can use your help.  Please contact us to find out how.</p>
-          <p><a class="btn" href="contactus.html">View details &raquo;</a></p>
-        </div>
-
-
-        <div class="span4">
-          <h2><img src=img/microscope.jpg width="10%" height="10%">R & D</h2>
-          <p>Enhanced IP is still a relatively new idea.  If you're the type of person who enjoys research and development then feel free to check out our research papers and presentations.  Also, feel free to <a href="contactus.html">contact us</a> to find out some possible research areas.  We would be happy to hear your ideas as well.</p>
-          <p><a class="btn" href="documentation.html">View details &raquo;</a></p>
-       </div>
-
-
-      </div>
-
-      <hr>
-
-    </div> <!-- /container -->
+    </div>   <!-- /container -->
 
     <!-- Le javascript
     ================================================== -->
@@ -141,6 +113,7 @@
     <script src="assets/js/bootstrap-typeahead.js"></script>
 
     <script src="dropdown.js"></script>
+
 
   </body>
 </html>
