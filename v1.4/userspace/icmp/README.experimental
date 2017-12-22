@@ -1,8 +1,0 @@
-Examples of running etraceroute which right now is a semi-functional tcp traceroute tool:
-./traceroute -d 2.2.2.1
-./traceroute -d 2.2.2.1 -o -D 10.1.1.2 
-
-Examples of using measure:
- ./measure -d 10.0.0.1 -s 10.3.3.2 -c 10
-
-

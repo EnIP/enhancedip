@@ -1,7 +1,0 @@
-PROGRAMS
------------------------
-icmp 	  - ping,traceroute, and measurement programs that have an enhanced ip flare
-
-netcat    - a program to make tcp/udp connections over Enhanced IP
-
-

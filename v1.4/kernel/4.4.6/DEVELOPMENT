@@ -1,2 +1,0 @@
-* The string 'enhanced ip' is placed in or around all the code modifications we've made to the kernel.
-* This is intended to help others grep through our changes.

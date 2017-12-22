@@ -1,8 +1,0 @@
-This is a horrible work in progress where I am attemptng to 
-shrink down the size of our virtual machine environment from
-10 Gigs to about 2.5 Gigs.  I take one virtual machine (N2)
-and copy it three times to create EIP1, EIP2, and N1.  Since
-the machines are very similar we can make copies and tweak
-individual machine configs to get the setup we want.  The 
-setup.bat script is still buggy.  Don't expect it to work for 
-you.  Do feel free to improve on it. 

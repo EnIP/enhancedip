@@ -1,6 +1,0 @@
-#!/bin/sh
-# Gets rid of the formatting ESC sequences
-sed '
-s/\[[0-9]m//g
-s/\[[1-4][0-9]m//g
-'
