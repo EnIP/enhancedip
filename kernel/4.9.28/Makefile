@@ -1,8 +1,7 @@
 
 #Edit the kernel line to point to your kernel source tree.
 #Currently, only 4.4.6 is supported.
-#KERNEL  := /media/disk2/linux-4.4.6/
-KERNEL  := /usr/src/linux-4.4.6/
+KERNEL  := /usr/src/linux-4.9.28/
 
 all: donothing
 
