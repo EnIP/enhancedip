@@ -13,15 +13,6 @@
 
 #include "eip.h"
 
-struct ipopt
-{
-    	unsigned char copied:1;
-	unsigned char class:2;
-	unsigned char number:5;
-	unsigned char length;
-	unsigned char data[2];
-};
-
 void error(const char *msg)
 {
     perror(msg);
@@ -29,6 +20,7 @@ void error(const char *msg)
 }
 
 /*
+// this is the sockaddr_in structure but instead of 1 in_addr_t there are two.
 struct sockaddr_ein{
 	unsigned short sin_family;
 	unsigned short sin_port;
@@ -43,11 +35,6 @@ int main(int argc, char *argv[])
     int sockfd, portno, n;
     size_t counter = 0;
     struct sockaddr_ein serv_addr;
-    struct hostent *server1;
-    struct hostent *server2;
-    char *options = NULL;
-    int retval = 0;
-    struct ipopt opt;
     char buffer[100000];
 
     if (argc < 5) {

@@ -28,6 +28,7 @@
 #include "hexdump.h"
 #include "mytypes.h"
 #include "oping.h"
+#include "tcp.h"
 
 
 char *network_card = "eth0";

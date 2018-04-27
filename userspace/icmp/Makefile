@@ -32,5 +32,5 @@ install:
 	cp e_tcpping /usr/sbin/
 
 clean:
-	$(RM) -f *.o e_icmpd tcp_ping tcp_traceroute.c measure testtime experiments/icmp/eping eping experiments/tcp/tcp_ping traceroute findip tags
+	$(RM) -f *.o e_icmpd e_tcpping e_measure testtime experiments/icmp/e_ping e_ping experiments/tcp/e_tcp_ping e_trace_route findip tags
 
