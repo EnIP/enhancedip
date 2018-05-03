@@ -222,7 +222,7 @@ void got_packet(u_char *args, const struct pcap_pkthdr *header, const u_char *pa
 	int retval = 0;
 	char hostname[NI_MAXHOST] = {0}; 
 
-	retval_global = process_tcp_reply(packet+14, header->caplen-14, &g_replyip);
+	retval_global = process_tcp_reply((char *)packet+14, header->caplen-14, &g_replyip);
 
 	//retval = reverse_lookup(g_replyip, &hostname[0]);
 

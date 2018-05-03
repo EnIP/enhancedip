@@ -51,6 +51,8 @@ void parse_argvs(int, char**, struct in_addr *, struct in_addr *, struct in_addr
 		int *, useconds_t *, int *);
 void usage(char *);
 char* getip();
+int otraceroute_icmp(struct in_addr dst, struct in_addr src, struct in_addr esrc, struct in_addr edst, struct in_addr *replyip, int ttl, int64 *difference);
+int rtraceroute_icmp(struct in_addr dst, struct in_addr src, struct in_addr *replyip, int ttl, int64 *difference);
 
 char *parse_route_table(char *rt, int len)
 {

@@ -48,5 +48,10 @@ struct threaddata{
 	struct in_addr dst;
 };
 
+int trace_tcp(struct in_addr dst, struct in_addr src, struct in_addr *replyip, int ttl,
+                        unsigned short sport, unsigned short dport,  char *data, unsigned short data_len, int64 *difference);
+
+int trace_tcp_options(struct in_addr dst, struct in_addr src, struct in_addr esrc, struct in_addr edst, struct in_addr *replyip, int ttl,
+                        unsigned short sport, unsigned short dport, char *data, unsigned short data_len, int64 *difference);
 
 #endif
