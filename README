@@ -4,6 +4,19 @@
 #
 #################################################################
 
+You need an Enhanced IP aware NAT/router and a computer behind that device running the Enhanced IP version of the Linux kernel.
+You also need a DNS server serving Enhanced IP/IPv6 records.  This document will guide you through the process of compiling
+everything you need.
+
+This document will tell you how to get both of these.
+
+Enhanced IP aware NAT/router
+============================
+1) Follow the instructions in kernel/3.10.49/eipnat/README to build an openwrt router with Enhanced IP support.
+
+
+Enhanced IP version of the Linux kernel
+=======================================
 1) Load the patched 4.4.6 kernel on all your linux machines that you want to have Enhanced IP.
    Follow the instructions here:
 
